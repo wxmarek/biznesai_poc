@@ -1,0 +1,137 @@
+Test Name: Probe Activation and Initialization Check
+Steps:
+1. Launch the ultrasound probe simulator in the testing software (e.g., virtual environment).
+2. Simulate connecting the probe to a USB port (or another interface).
+3. Check the simulator logs to see if there is a message indicating that the device has been successfully detected.
+4. Verify the probe status in the simulator: confirm default parameters are set (e.g., frequency, gain).
+5. In the ultrasound application, read the status to confirm it shows a successful initialization.
+
+Expected Result:
+- The probe is visible in the simulator and in the application as "online."
+- No initialization errors in the logs and no warning messages.
+
+### 
+Test Name: Probe Detection by the System (USB 2.0 / 3.0)
+Steps:
+1. Launch the ultrasound probe simulator and the test application.
+2. In the simulator, select the "USB 2.0" mode and simulate connecting the device.
+3. Verify in the application whether a "Probe detected" message appears (device ID, driver name).
+4. Disconnect the simulator, switch it to "USB 3.0" mode, and simulate the connection again.
+5. Verify once more in the application that the probe is correctly detected when using USB 3.0.
+
+Expected Result:
+- The system correctly detects the probe in both USB 2.0 and USB 3.0 modes.
+- The ultrasound application displays the correct device information in both cases.
+
+### 
+Test Name: Changing Operating Frequency (2 MHz, 10 MHz)
+Steps:
+1. In the simulator, start the probe with a default frequency (e.g., 5 MHz).
+2. In the test application, select the option to change the frequency to 2 MHz.
+3. Observe if the simulator confirms the change (log: "Frequency set to 2 MHz") and if the application displays the new image.
+4. Switch the frequency to 10 MHz and again check the simulator logs and the image preview.
+5. Check if there are no interruptions in transmission or error messages when switching between 2 MHz and 10 MHz.
+
+Expected Result:
+- The probe correctly switches between 2 MHz and 10 MHz.
+- The image quality changes according to the selected frequency without losing transmission.
+- No frequency-switching errors appear in the logs.
+
+###
+Test Name: Changing Work Mode (B-Mode, M-Mode, Doppler)
+Steps:
+1. Launch the simulator with the probe in B-mode (default).
+2. In the test application, switch to M-mode and check the simulator logs:
+   - Expected log: "Mode switched to M-mode."
+3. Examine the image in the application to see if it changes to the linear M-mode trace without artifacts.
+4. Next, switch to Doppler mode (Color/PW) and check the simulator logs as well as image smoothness.
+5. Switch between these modes multiple times, observing whether any delays or errors occur.
+
+Expected Result:
+- Modes switch without downtime, and the displayed image matches the selected mode.
+- The simulator logs show a mode change with no errors.
+- The application correctly updates the interface and working parameters.
+
+###
+Test Name: Adjusting Penetration Depth
+Steps:
+1. In the simulator, set the initial depth to 5 cm.
+2. Launch the application and verify that it shows 5 cm depth in the parameters panel.
+3. Change the depth to 15 cm from the application interface.
+4. Observe whether the simulator logs "Depth set to 15 cm" and whether the displayed image in the application is rescaled accordingly.
+5. Switch the depth multiple times (5, 10, 15 cm) to confirm the transitions are smooth and error-free.
+
+Expected Result:
+- The application always correctly displays the current depth.
+- Changing the depth does not cause freezes, and the image scales according to the parameter.
+- The simulator confirms each depth change in its logs.
+
+###
+Test Name: Gain Control Adjustment
+Steps:
+1. Launch the simulator with a default gain (e.g., 50%).
+2. In the application, move the GAIN slider to the minimum value (e.g., 0%).
+3. Check whether the on-screen image becomes noticeably dimmer and if the simulator logs "Gain=0%."
+4. Increase the GAIN to the maximum value (e.g., 100%) and observe the change in brightness.
+5. Test several intermediate values (e.g., 25%, 75%) to ensure the response is as expected.
+
+Expected Result:
+- Each GAIN value change is reflected in the simulator and the image without delay.
+- No errors occur at extreme settings (0% and 100%).
+- The application correctly shows the current gain level.
+
+###
+Test Name: Zoom Test (2x, 4x)
+Steps:
+1. Launch the simulator with the default zoom (1x).
+2. In the application, select the zoom function and set it to 2x.
+3. Verify in the simulator logs that "Zoom factor=2x" is displayed and that the image is noticeably magnified.
+4. Switch the zoom to 4x and again evaluate the displayed image in the application and simulator logs.
+5. Return to 1x and confirm that the image reverts to the default setting without errors.
+
+Expected Result:
+- The application correctly modifies the zoom factor (2x, 4x), and the image is magnified accordingly.
+- Each change is confirmed in the simulator logs.
+- No image distortion or error messages appear during repeated zoom changes.
+
+###
+Test Name: Auto-Optimize (Automatic Tuning)
+Steps:
+1. Launch the simulator with factory settings (Gain=50%, Depth=10 cm, Frequency=5 MHz).
+2. In the test application, enable the "Auto-Optimize" mode.
+3. Observe the simulator logs to see a series of messages adjusting parameters (e.g., "Gain=60%, Frequency=4.5 MHz").
+4. Examine the final image quality: verify it becomes clearer and that the application shows updated parameters.
+5. Disable "Auto-Optimize" and confirm that the parameters remain at their last set values, without reverting to defaults.
+
+Expected Result:
+- The auto-optimize feature improves image clarity.
+- The parameters truly change in the simulator and are reflected in the application.
+- No errors occur when enabling or disabling this feature.
+
+###
+Test Name: Measurement Functions (Distance, Area)
+Steps:
+1. In the simulator, load a reference object (e.g., a phantom with a known diameter).
+2. In the application, use the distance measurement tool, marking two points on the phantom’s image.
+3. Compare the measured result with the object’s real dimension, checking for discrepancies (within a set tolerance).
+4. Then select the area measurement tool (mark a circle or another shape on the phantom).
+5. Compare the computed result with the simulator’s reference value (e.g., 3.14 cm²).
+
+Expected Result:
+- Distance and area measurements match the simulator data within the established tolerance.
+- The application does not produce errors or freeze during measurements.
+- Results remain consistent when measuring the same region multiple times.
+
+###
+Test Name: Saving and Loading Images (JPEG/DICOM Format)
+Steps:
+1. Launch the simulator and set an example scene (e.g., spherical phantom).
+2. In the application, click "Save Image" and choose the JPEG format.
+3. Verify that the *.jpg file is created correctly (via simulator logs or the save directory).
+4. Repeat the save process in DICOM format. Confirm the presence of metadata (Date, Patient ID) in the file, if the simulator supports it.
+5. Attempt to load the saved files (JPEG and DICOM) back into the application and check if the image is displayed correctly.
+
+Expected Result:
+- Images in JPEG and DICOM formats are saved without errors.
+- The DICOM file contains basic metadata (if supported by the simulator).
+- Loading the files back produces the correct preview with no distortion.
